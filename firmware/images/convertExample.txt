@@ -1,0 +1,3 @@
+convert logo2.png -define bmp:format=bgr565 -depth 16 -size 160x80 rgb:output.raw
+magick logo2.png -depth 8 -colorspace RGB -define bmp:subtype=RGB565 -type truecolor -flip -resize 160x80\! -depth 16 BGR:output.raw
+magick logo2.png -depth 8 -resize 160x80\! rgb:output.raw

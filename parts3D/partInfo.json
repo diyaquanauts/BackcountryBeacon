@@ -1,0 +1,16 @@
+[
+  {
+    "name": "GPS Holder - Top",
+    "description": "This part securely holds the top section of the BZ-181 GPS module in place on the T-Dongle S3. It's designed to snugly fit around the module while providing easy access to necessary ports.",
+    "image": "./thumbnails/GpsHolder-Top.png",
+    "Drawn By": "Brett Smith",
+    "filename": "GpsHolder-Top.stl"
+  },
+  {
+    "name": "GPS Holder - Bottom",
+    "description": "This part serves as the base for the BZ-181 GPS module, mounting it firmly to the T-Dongle S3. It aligns perfectly with the top holder to provide a stable and fit for the GPS module onto the TDongle.",
+    "image": "./thumbnails/GpsHolder-Bottom.png",
+    "Drawn By": "Brett Smith",
+    "filename": "GpsHolder-Bottom.stl"
+  }
+]
