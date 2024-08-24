@@ -15,7 +15,7 @@ These tools work together to automate the process of preparing map data for the 
 
 
 ## Visualize Hawaii’s Tile Cache
-
+![Calculating State Tiles](https://i.ibb.co/sQ1Sr69/Screenshot-2024-08-24-at-4-39-02-PM.png)
 To see a visualization of the tiles and tile cache specifically for Hawaii, visit the [Cache Explorer](https://cache-explorer.netlify.app/). This tool helps you understand the geographic areas and zoom levels covered by your downloaded tiles for Hawaii.
 
 ## Using the Tile Downloader
