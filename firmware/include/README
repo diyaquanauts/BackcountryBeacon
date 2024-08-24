@@ -1,39 +1,81 @@
 
-This directory is intended for project header files.
+The `include` folder contains custom header files that define various components and functionalities used throughout the Backcountry Beacon firmware. These files provide the foundational elements for handling tasks such as timing functions, managing middleware, and defining routes.
 
-A header file is a file containing C declarations and macro definitions
-to be shared between several project source files. You request the use of a
-header file in your project source file (C, C++, etc) located in `src` folder
-by including it, with the C preprocessing directive `#include'.
+## File Overview
 
-```src/main.c
+### 1. `FunctionTimer.h`
 
-#include "header.h"
+The `FunctionTimer.h` file defines a simple task manager that allows functions to be executed at regular intervals without blocking the main loop.
 
-int main (void)
-{
- ...
-}
-```
+#### Code Example:
 
-Including a header file produces the same results as copying the header file
-into each source file that needs it. Such copying would be time-consuming
-and error-prone. With a header file, the related declarations appear
-in only one place. If they need to be changed, they can be changed in one
-place, and programs that include the header file will automatically use the
-new version when next recompiled. The header file eliminates the labor of
-finding and changing all the copies as well as the risk that a failure to
-find one copy will result in inconsistencies within a program.
+    #include "FunctionTimer.h"
+    
+    void updateDisplay() {
+        // Code to update the TFT display with new information
+    }
+    
+    FunctionTimer displayUpdater(updateDisplay, 10000); // Run every 10 seconds
+    
+    void loop() {
+        displayUpdater.service(); // Check if it's time to run the function
+    }
+#### Explanation:
 
-In C, the usual convention is to give header files names that end with `.h'.
-It is most portable to use only letters, digits, dashes, and underscores in
-header file names, and at most one dot.
+-   **Purpose:** `FunctionTimer` is designed to manage periodic tasks efficiently, ensuring that various functions can be executed on a schedule without interfering with the main loop’s responsiveness.
+-   **Usage:** The class is instantiated with a function pointer and an update interval. The `service()` method is called in the main loop to check if the function should be executed based on the elapsed time.
 
-Read more about using header files in official GCC documentation:
+### 2. `MiddlewareSystem.h`
 
-* Include Syntax
-* Include Operation
-* Once-Only Headers
-* Computed Includes
+The `MiddlewareSystem.h` file defines a middleware handler system built on top of the `ESPAsyncWebServer`. This system is designed to be "express-like," allowing for easy chaining and management of middleware functions.
 
-https://gcc.gnu.org/onlinedocs/cpp/Header-Files.html
+#### Code Example:
+
+    #include "MiddlewareSystem.h"
+    
+    MiddlewareHandler app(server);
+    
+    // Custom middleware function to log requests
+    CREATE_MIDDLEWARE(logRequest, {
+        Serial.printf("Request URL: %s\n", request->url().c_str());
+        next(); // Pass control to the next middleware or handler
+    });
+    
+    void setup() {
+        // Initialize the server
+        app.use(logRequest); // Add middleware to the chain
+        app.addRoute("/", HTTP_GET, [](AsyncWebServerRequest *request){
+            request->send(200, "text/html", "Hello, world!");
+        });
+        server.begin();
+    }
+#### Explanation:
+
+-   **Purpose:** The middleware system allows for modular and flexible handling of HTTP requests. Middleware functions can be chained together, each performing specific tasks like logging, resource monitoring, or custom request processing.
+-   **Usage:** Middlewares are created using the `CREATE_MIDDLEWARE` macro and can be added to the middleware chain using the `use()` method. The `addRoute()` method allows the integration of routes that are processed through the middleware chain before handling the request.
+### 3. `routes.h`
+
+The `routes.h` file defines the routes for the web server, linking specific URLs to their corresponding handlers. This file is central to how the firmware serves content and responds to user interactions.
+
+#### Code Example:
+
+    #include "routes.h"
+    
+    void setupRoutes(MiddlewareHandler &app, AsyncWebServer &server, TinyGPSPlus &gps) {
+        app.addRoute("/", HTTP_GET, [](AsyncWebServerRequest *request){
+            request->send_P(200, "text/html", index_html); // Serve the main page
+        });
+    
+        app.addRoute("/location", HTTP_GET, [&gps](AsyncWebServerRequest *request){
+            String locationData = String(gps.location.lat(), 6) + "," + String(gps.location.lng(), 6);
+            request->send(200, "application/json", "{\"location\": \"" + locationData + "\"}");
+        });
+    
+        // Additional routes can be added here
+    }
+
+#### Explanation:
+
+-   **Purpose:** `routes.h` centralizes the definition of all web routes used by the server. This makes it easy to manage and update the URLs and their corresponding handlers.
+-   **Usage:** The `setupRoutes()` function is called in the `setup()` function of the main firmware file. It registers routes with the server, associating them with specific handlers that serve HTML, JSON, or other content types.
+
