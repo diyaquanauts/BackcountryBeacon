@@ -1,6 +1,6 @@
 # Backcountry Beacon Firmware Overview
 
-The Backcountry Beacon firmware transforms the LilyGo S3 USB dongle into a portable, offline mapping and file server. This firmware integrates essential hardware components and software functionalities to support outdoor adventurers.
+The Backcountry Beacon firmware transforms the LilyGo S3 USB dongle into a portable, offline mapping and file server. Developed using PlatformIO, this firmware integrates essential hardware components and software functionalities to support outdoor adventurers.
 
 ### Hardware Overview
 
