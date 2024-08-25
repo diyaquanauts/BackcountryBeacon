@@ -18,3 +18,6 @@ This folder includes 3D models and related resources for any physical components
 #### 3. `tileDownloader/`
 
 This folder contains scripts and data related to downloading and managing offline map tiles. It includes tools to calculate storage requirements, cache map tiles, and manage the geographic data used by the Backcountry Beacon to provide offline map services.
+
+#### 4. `sdCard/`
+This folder provides a template for the organization of the microSD card used in the Backcountry Beacon device. It includes the necessary directory structure and files required for the device to deliver offline maps and serve files over Wi-Fi. The sdCard/ folder is meant to be copied directly onto your microSD card, ensuring that all required files are in place for proper operation.
