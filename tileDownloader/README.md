@@ -96,3 +96,6 @@ The tile caching system in the `tileDownloader` script is designed to optimize t
 -   -   **Explanation:**
         -   In this structure, the keys represent the zoom levels (e.g., `"12"`), and each zoom level contains an object where the keys represent the x-coordinates of the tiles.
         -   The values are arrays of y-coordinates, indicating which tiles are required at that specific x-coordinate and zoom level.
+
+## Estimating Tile Downloading Sizes
+I have made a table estimating the size of downloading the tile of a particular state to a particular zoom leve, which is visible [here](us_tile_summary.md).
